@@ -1,4 +1,4 @@
-import { useState, React,useEffect } from "react";
+import { useState, React,useEffect,useMemo } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -11,8 +11,8 @@ const locate = "https://hostelbackend.herokuapp.com/roomimages/";
 
 
 function Modals({ data, handler }) {
-  const form=new FormData();
   const [show, setShow] = useState(true);
+  const form=useMemo(()=>new FormData(),[])
 
   const handleClose = () => setShow(false);
   
@@ -23,7 +23,7 @@ function Modals({ data, handler }) {
     form.append("roomprice",data.roomprice);
     form.append("roomdescription",data.roomdescription);
     form.append("roomcapacity",data.roomcapacity);
-  }, [data]);
+  }, [data,form]);
 
  
 

@@ -133,6 +133,7 @@ function NewRoom() {
                       [e.target.name]: [e.target.files[0]],
                     })
                   }
+                  accept="image/*"
                 />
                 <FormText>
                   This is some placeholder block-level help text for the above

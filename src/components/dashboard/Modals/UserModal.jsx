@@ -1,4 +1,4 @@
-import { useState, React, useEffect } from "react";
+import { useState, React, useEffect, useMemo } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -7,7 +7,7 @@ import axios from "axios";
 
 function UserModal({ data, handler }) {
   const [show, setShow] = useState(true);
-  const form = new FormData();
+  const form = useMemo(()=> new FormData(),[])
 
   useEffect(() => {
     async function populateform(){
@@ -18,7 +18,7 @@ function UserModal({ data, handler }) {
     form.append("role", data.role);
     }
     populateform();
-  }, [data]);
+  }, [data,form]);
   const handleClose = () => setShow(false);
   const commitchange = (e) => {
     form.set(e.target.name, e.target.value);

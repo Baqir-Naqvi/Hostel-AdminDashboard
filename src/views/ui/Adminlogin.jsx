@@ -34,7 +34,12 @@ function Adminlogin() {
       password: password,
     };
     axios
-      .post("https://hostelbackend.herokuapp.com/login", data)
+      .post("https://hostelbackend.herokuapp.com/login", data,{
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+
+      })
       .then((res) => {
         if (res.data.token) {
           setResult(res.data);
