@@ -52,7 +52,7 @@ function NewRoom() {
   };
   async function AddNewRoom(form) {
     await axios
-      .post("http://localhost:4000/roomslist/", form, {
+      .post("https://hostelbackend.herokuapp.com/roomslist/", form, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: ACCESS,

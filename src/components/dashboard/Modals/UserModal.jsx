@@ -25,7 +25,7 @@ function UserModal({ data, handler }) {
   };
   async function UpdateUser() {
     await axios
-      .put("http://localhost:4000/users/" + data._id, form, {
+      .put("https://hostelbackend.herokuapp.com/users/" + data._id, form, {
         headers: {
           "Content-Type": "application/json",
           Authorization: process.env.REACT_APP_ACCESS,

@@ -9,7 +9,7 @@ function Starter() {
   const[graphload,setGraphload]=useState(false);
   useEffect(() => {
     async function fetchData() {
-      await axios.get("http://localhost:4000/roomslist").then((res) => {
+      await axios.get("https://hostelbackend.herokuapp.com/roomslist").then((res) => {
         setData(res.data);
       });
     }
@@ -33,7 +33,7 @@ function Starter() {
 
   return (
     <div>
-      {/***Top Cards***/}
+    
       <Row>
         <Col sm="6" lg="3">
           <TopCards
@@ -72,7 +72,7 @@ function Starter() {
           />
         </Col>
       </Row>
-      {/***Sales & Feed***/}
+
       <Row>
         <Col xxl="12">
           {graphload? <SalesChart rooms={data}/>: <h1>Loading...</h1>}

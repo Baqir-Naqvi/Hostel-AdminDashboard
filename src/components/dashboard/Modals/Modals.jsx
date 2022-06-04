@@ -6,7 +6,7 @@ import { FormGroup, Label, Input, FormText } from "reactstrap";
 import axios from "axios";
 const ACCESS = "" + process.env.REACT_APP_ACCESS;
 
-const locate = "http://localhost:4000/roomimages/";
+const locate = "https://hostelbackend.herokuapp.com/roomimages/";
 
 
 
@@ -35,7 +35,7 @@ function Modals({ data, handler }) {
 
   async function UpdateRoom() {
       await axios
-      .put("http://localhost:4000/roomslist?id="+data._id+"&image="+data.image , form, {
+      .put("https://hostelbackend.herokuapp.com/roomslist?id="+data._id+"&image="+data.image , form, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "multipart/form-data",

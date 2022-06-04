@@ -15,13 +15,13 @@ function ProjectTables() {
   useEffect(() => {
     setShow(false);
     async function fetchData() {
-      await axios.get("http://localhost:4000/roomslist").then((res) => {
+      await axios.get("https://hostelbackend.herokuapp.com/roomslist").then((res) => {
         setData(res.data);
       });
     }
     async function fetchUsers() {
       await axios
-        .get(`http://localhost:4000/users`, {
+        .get(`https://hostelbackend.herokuapp.com/users`, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -39,7 +39,7 @@ function ProjectTables() {
     e.preventDefault();
    
     await axios
-      .delete("http://localhost:4000/roomslist?id="+id+"&image="+imagepath, {
+      .delete("https://hostelbackend.herokuapp.com/roomslist?id="+id+"&image="+imagepath, {
         headers: {
           "Content-Type": "application/json",
           Authorization: ACCESS,
@@ -54,7 +54,7 @@ function ProjectTables() {
     e.preventDefault();
 
     await axios
-      .delete("http://localhost:4000/users/" + id, {
+      .delete("https://hostelbackend.herokuapp.com/users/" + id, {
         headers: {
           "Content-Type": "application/json",
           Authorization: ACCESS,
@@ -68,7 +68,7 @@ function ProjectTables() {
   async function UpdateUser(e, id) {
     e.preventDefault();
     await axios
-      .get("http://localhost:4000/users/" + id, {
+      .get("https://hostelbackend.herokuapp.com/users/" + id, {
         headers: {
           "Content-Type": "application/json",
           Authorization: ACCESS,
@@ -83,7 +83,7 @@ function ProjectTables() {
   async function UpdateRoom(e, id) {
     e.preventDefault();
 
-    await axios.get("http://localhost:4000/roomslist/" + id).then((res) => {
+    await axios.get("https://hostelbackend.herokuapp.com/roomslist/" + id).then((res) => {
       setProject(res.data);
       show ? setShow(false) : setShow(true);
     });

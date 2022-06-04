@@ -39,9 +39,8 @@ function Newuser() {
       };
       async function AddNewUser(user)
       {
-            await axios.post("http://localhost:4000/addnewuser/",user,{
+            await axios.post("https://hostelbackend.herokuapp.com/addnewuser/",user,{
               headers: {
-                'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
                 'Authorization': process.env.REACT_APP_ACCESS
             }

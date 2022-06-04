@@ -34,7 +34,7 @@ function Adminlogin() {
       password: password,
     };
     axios
-      .post("http://localhost:4000/login", data)
+      .post("https://hostelbackend.herokuapp.com/login", data)
       .then((res) => {
         if (res.data.token) {
           setResult(res.data);
