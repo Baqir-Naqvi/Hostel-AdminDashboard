@@ -1,4 +1,4 @@
-import { Row, Col, Card, CardBody, CardTitle, Button } from "reactstrap";
+import { Row, Col, Card, CardBody, CardTitle } from "reactstrap";
 
 const About = () => {
   return (
@@ -15,23 +15,15 @@ const About = () => {
           <CardBody className="p-4">
             <Row style={{justifyContent:"center"}}>
               <Col lg="8">
-                <h2 className="mt-4">Ample React Admin Pro Version</h2>
+                <h2 className="mt-4">About Us</h2>
                 <h5 className=" mb-4">
-                  5 premium and highly customizable demo variations included in
-                  the package, with React Router 6, Redux Toolkit, Axios nd much
-                  more...
+                 Lorem ipsum, dolor sit amet consectetur 
+                 adipisicing elit. Ex quam neque dolore magni beatae tenetur, aperiam aut excepturi rerum omnis.
                 </h5>
                 <img
-                  src="https://www.wrappixel.com/wp-content/uploads/edd/2020/09/ample-react-admin-template-y.png"
-                  alt="my"
+                  src="https://cdn.pixabay.com/photo/2017/08/31/06/58/taiwan-2699628__340.jpg"
+                  alt="hostelimage"
                 />
-                <Button
-                  className="mt-3"
-                  color="primary"
-                  target="_blank"
-                >
-                  Check Pro Version
-                </Button>
               </Col>
             </Row>
           </CardBody>
