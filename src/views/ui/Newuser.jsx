@@ -39,10 +39,9 @@ function Newuser() {
       };
       async function AddNewUser(user)
       {
-            await axios.post("https://hostelbackend.herokuapp.com/addnewuser/",user,{
+            await axios.post("https://backendhostel.herokuapp.com/addnewuser/",user,{
               headers: {
                 'Content-Type': 'application/json',
-                'Authorization': process.env.REACT_APP_ACCESS
             }
             }).then((res) => {
               window.location.reload();

@@ -1,6 +1,7 @@
 const protect=()=>
-{   const token=localStorage.getItem('token');
-    if(token==="admin")
+{   const user=localStorage.getItem('user');
+    const token=localStorage.getItem('token');
+    if(user==="admin"&&token)
     return true
     else    
     return false

@@ -11,53 +11,55 @@ function ProjectTables() {
   const [show, setShow] = useState(false);
   const [data, setData] = useState([]);
   const [project, setProject] = useState([]);
-  const ACCESS = "" + process.env.REACT_APP_ACCESS;
   useEffect(() => {
     setShow(false);
     async function fetchData() {
-      await axios.get("https://hostelbackend.herokuapp.com/roomslist").then((res) => {
+      await axios.get("https://backendhostel.herokuapp.com/roomslist").then((res) => {
         setData(res.data);
       });
     }
     async function fetchUsers() {
       await axios
-        .get(`https://hostelbackend.herokuapp.com/users`, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            Authorization: ACCESS,
-          },
-        })
+        .get(`https://backendhostel.herokuapp.com/users`)
         .then((res) => {
           setData(res.data);
         });
     }
     param.user ? fetchUsers() : fetchData();
-  }, [param, ACCESS]);
+  }, [param]);
 
   async function DeleteRoom(e, id,imagepath) {
     e.preventDefault();
    
     await axios
-      .delete("https://hostelbackend.herokuapp.com/roomslist?id="+id+"&image="+imagepath, {
+      .delete("https://backendhostel.herokuapp.com/roomslist?id="+id+"&image="+imagepath, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: ACCESS,
+          Authorization: localStorage.getItem("token")
+          ? `${localStorage.getItem("token")}`
+          : ""
         },
       })
       .then((res) => {
+        alert("Room Deleted Successfully");
         window.location.reload();
-      });
+      })
+      .catch((err) => {
+        alert(err.response.data);
+      }
+      );
   }
 
   async function DeleteUser(e, id) {
     e.preventDefault();
 
     await axios
-      .delete("https://hostelbackend.herokuapp.com/users/" + id, {
+      .delete("https://backendhostel.herokuapp.com/users/" + id, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: ACCESS,
+          Authorization: localStorage.getItem("token")
+          ? `${localStorage.getItem("token")}`
+          : "",
         },
       })
       .then((res) => {
@@ -68,12 +70,7 @@ function ProjectTables() {
   async function UpdateUser(e, id) {
     e.preventDefault();
     await axios
-      .get("https://hostelbackend.herokuapp.com/users/" + id, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: ACCESS,
-        },
-      })
+      .get("https://backendhostel.herokuapp.com/users/"+id)
       .then((res) => {
         setProject(res.data);
         show ? setShow(false) : setShow(true);
@@ -83,7 +80,7 @@ function ProjectTables() {
   async function UpdateRoom(e, id) {
     e.preventDefault();
 
-    await axios.get("https://hostelbackend.herokuapp.com/roomslist/" + id).then((res) => {
+    await axios.get("https://backendhostel.herokuapp.com/roomslist/" + id).then((res) => {
       setProject(res.data);
       show ? setShow(false) : setShow(true);
     });

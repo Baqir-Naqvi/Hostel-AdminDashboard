@@ -1,30 +1,30 @@
 import React from "react";
-import { Form } from "react-bootstrap";
-import { Button } from "react-bootstrap";
-import { Col } from "react-bootstrap";
-import { Row } from "react-bootstrap";
+import { Button,Col,Row,Form } from "react-bootstrap";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
 function Adminlogin() {
-  
+  const [Errormsg, setErrormsg] = useState("");
   const [result, setResult] = useState();
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   useEffect(() => {
     if (result) {
-      if (localStorage.getItem("token") === "admin")
+      if (localStorage.getItem("user") === "admin")
         window.location.href = "/starter";
     }
-    
+    setErrormsg("");
   }, [result]);
+
   useEffect(() => {
     localStorage.clear();
   }, []);
+
   const handleChange = (e) => {
     setCredentials({
       ...credentials,
       [e.target.name]: e.target.value.trim(),
     });}
+
   function Login(e) {
     e.preventDefault();
     var username = credentials.email;
@@ -34,18 +34,21 @@ function Adminlogin() {
       password: password,
     };
     axios
-      .post("https://hostelbackend.herokuapp.com/login", data,{
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-
+      .post("https://backendhostel.herokuapp.com/login", data,{
       })
       .then((res) => {
-        if (res.data.token) {
+        if (res.data.user==="admin")  // check if token belongs to admin
+        {
           setResult(res.data);
-          localStorage.setItem("token", res.data.user.role);
-        } else {
-          alert(res.data.message);
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("user", res.data.user);
+        } else if(res.data.user==="user")  // if user tries to login
+        {
+          setErrormsg("You do not have admin access");
+        }
+        else  //if credentials are invalid
+        {
+          setErrormsg("Invalid credentials");
         }
       })
       .catch((err) => {
@@ -54,7 +57,7 @@ function Adminlogin() {
   }
 
   return (
-    <div>
+    <div style={{display:"block"}}>
       <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">
         Admin Login
       </h1>
@@ -65,7 +68,7 @@ function Adminlogin() {
               <Form.Label>Email address</Form.Label>
               <Form.Control name="email"type="email" placeholder="Enter email" onChange={e=>handleChange(e)}/>
             </Form.Group>
-
+     
             <Form.Group controlId="password">
               <Form.Label>Password</Form.Label>
               <Form.Control
@@ -80,11 +83,17 @@ function Adminlogin() {
               Submit
             </Button>
           </Form>
+          <div style={{width:"25rem"}}>
+        {Errormsg ? <p style={{color:"red"}}>{Errormsg}</p> : null}
+        </div>
         </Col>
       </Row>
+      
       <h6 className="mt-5 p-5 text-center text-secondary">
         Copyright @ 2022 Hostel Book.All Right Reserved.{" "}
       </h6>
+     
+       
     </div>
   );
 }

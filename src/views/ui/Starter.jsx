@@ -9,7 +9,7 @@ function Starter() {
   const[graphload,setGraphload]=useState(false);
   useEffect(() => {
     async function fetchData() {
-      await axios.get("https://hostelbackend.herokuapp.com/roomslist").then((res) => {
+      await axios.get("https://backendhostel.herokuapp.com/roomslist").then((res) => {
         setData(res.data);
       });
     }

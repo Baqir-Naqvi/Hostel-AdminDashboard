@@ -3,13 +3,22 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { FormGroup, Label, Input } from "reactstrap";
+import ErrorHandle from "../../ErrorComponent/ErrorHandle";
+import SuccessHandle from "../../SuccessComponent/SuccessHandle"
 import axios from "axios";
+import Aos from "aos";
+import "aos/dist/aos.css";
+
 
 function UserModal({ data, handler }) {
   const [show, setShow] = useState(true);
+  const [Errormsg, setErrormsg] = useState("");
+  const [Success, setSuccess] = useState("");
+  
   const form = useMemo(()=> new FormData(),[])
 
   useEffect(() => {
+    Aos.init({ duration: 300 });
     async function populateform(){
       
     form.append("name", data.name);
@@ -19,22 +28,35 @@ function UserModal({ data, handler }) {
     }
     populateform();
   }, [data,form]);
+
   const handleClose = () => setShow(false);
   const commitchange = (e) => {
     form.set(e.target.name, e.target.value);
   };
+ 
   async function UpdateUser() {
+      const updateduser=
+      {
+      name:form.get("name"),
+      email:form.get("email"),
+      password:form.get("password"),
+      role:form.get("role"),
+    }
     await axios
-      .put("https://hostelbackend.herokuapp.com/users/" + data._id, form, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: process.env.REACT_APP_ACCESS,
-        },
+      .put("https://backendhostel.herokuapp.com/users?id="+data._id,updateduser,{
+        headers:{
+          Authorization: localStorage.getItem("token")
+          ? `${localStorage.getItem("token")}`
+          : "",
+        }
       })
       .then((res) => {
-        handler();
+        setSuccess(res.data);
+      })
+      .catch((err) => {
+        setErrormsg(err.response);
       });
-    window.location.reload();
+
   }
   return (
     <Modal show={show} onHide={handleClose}>
@@ -46,7 +68,7 @@ function UserModal({ data, handler }) {
           <FormGroup>
             <Label for="name">UserName</Label>
             <Input
-              name="username"
+              name="name"
               type="text"
               defaultValue={data.name}
               onChange={commitchange}
@@ -82,6 +104,10 @@ function UserModal({ data, handler }) {
           Save Changes
         </Button>
       </Modal.Footer>
+      <div style={{ position: "fixed", marginTop: "100px", marginLeft: "30px"}}>
+        {Errormsg ? <ErrorHandle errormsg={Errormsg} /> : null}
+        {Success ? <SuccessHandle successmsg={Success} /> : null}
+      </div>
     </Modal>
   );
 }

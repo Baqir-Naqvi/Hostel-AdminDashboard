@@ -13,7 +13,6 @@ import {
 } from "reactstrap";
 import React from "react";
 import axios from "axios";
-const ACCESS = "" + process.env.REACT_APP_ACCESS;
 
 function NewRoom() {
   const initialFormData = Object.freeze({
@@ -52,10 +51,9 @@ function NewRoom() {
   };
   async function AddNewRoom(form) {
     await axios
-      .post("https://hostelbackend.herokuapp.com/roomslist/", form, {
+      .post("https://backendhostel.herokuapp.com/roomslist/", form, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: ACCESS,
         },
       })
       .then((res) => {

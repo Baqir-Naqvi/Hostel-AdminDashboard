@@ -4,9 +4,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { FormGroup, Label, Input, FormText } from "reactstrap";
 import axios from "axios";
-const ACCESS = "" + process.env.REACT_APP_ACCESS;
 
-const locate = "https://hostelbackend.herokuapp.com/roomimages/";
+const locate = "https://backendhostel.herokuapp.com/roomimages/";
 
 
 
@@ -35,17 +34,20 @@ function Modals({ data, handler }) {
 
   async function UpdateRoom() {
       await axios
-      .put("https://hostelbackend.herokuapp.com/roomslist?id="+data._id+"&image="+data.image , form, {
+      .put("https://backendhostel.herokuapp.com/roomslist?id="+data._id+"&image="+data.image , form, {
         headers: {
-          "Access-Control-Allow-Origin": "*",
           "Content-Type": "multipart/form-data",
-          Authorization: ACCESS,
+          Authorization: localStorage.getItem("token")?
+          localStorage.getItem("token"):"",
         },
       })
       .then((res) => {
         handler();
         window.location.reload();
-      });  
+      }).catch((err)=>{
+        console.log(err)
+      }
+      );
   }
 
   return (
